@@ -1,0 +1,21 @@
+Parameters:
+  TrailPayment:
+    Type: String
+Resources:
+  Trail:
+    Type: AWS::CloudTrail::Trail
+    Properties:
+      IsLogging: true
+      TrailName: !Ref TrailPayment
+      EnableLogFileValidation: true
+      IncludeGlobalServiceEvents: true
+      IsMultiRegionTrail: true
+      S3BucketName: my-payment-trail-bucket  # Name of the S3 bucket for event storage
+      S3KeyPrefix: cloudtrail/logs/payment/ # Prefix for file names in the S3 bucket
+      EnableLogFileValidation: true
+      KMSKeyId: arn:aws:kms:us-east-1:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab # KMS key ID for encrypting CloudTrail events
+
+Outputs:
+  ARN:
+    Description: "CloudTrail Instance ARN"
+    Value: !Ref Trail
